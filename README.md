@@ -20,6 +20,7 @@ services:
     container_name: nginx
     environment:
       DEFAULT_DOMAIN: server1.example.com
+      DISABLE_IPV6: false
       TZ: Europe/Berlin
     image: krautsalad/nginx
     # needed for getting real client ips
@@ -36,6 +37,7 @@ services:
 ### Environment Variables
 
 - `DEFAULT_DOMAIN`: Default server certificate name (default: snakeoil).
+- `DISABLE_IPV6`: When set to true, IPv6 address binding is disabled and IPv6 addresses are excluded from OCSP stapling. (default: false).
 - `TZ`: Timezone setting (default: UTC).
 
 *Note*: The certificate for `DEFAULT_DOMAIN` will be used for all HTTPS requests that do not match any server names defined in your sites configuration. It is expected that the certificate and key files already exist (e.g., `./data/ssl/server1.example.com.pem` and `./data/ssl/server1.example.com.key`), otherwise Nginx will fail to start.
