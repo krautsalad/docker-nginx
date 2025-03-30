@@ -19,6 +19,7 @@ services:
   nginx:
     container_name: nginx
     environment:
+      DEFAULT_DOMAIN: server1.example.com
       TZ: Europe/Berlin
     image: krautsalad/nginx
     # needed for getting real client ips
@@ -34,7 +35,10 @@ services:
 
 ### Environment Variables
 
+- `DEFAULT_DOMAIN`: Default server certificate name (default: snakeoil).
 - `TZ`: Timezone setting (default: UTC).
+
+*Note*: The certificate for `DEFAULT_DOMAIN` will be used for all HTTPS requests that do not match any server names defined in your sites configuration. It is expected that the certificate and key files already exist (e.g., `./data/ssl/server1.example.com.pem` and `./data/ssl/server1.example.com.key`), otherwise Nginx will fail to start.
 
 ## How it works
 
@@ -47,10 +51,10 @@ For ACME challenges, mount the folder `./data/acme-challenge` to `/etc/nginx/acm
 
 ### Sites Configuration
 
-Place your individual site configuration files in the `./config/nginx` directory. For example, the configuration below sets up log files, enables ModSecurity, and acts as a reverse proxy for a Docker container named `server1.example.com-web` (which listens on port 8080):
+Place your individual site configuration files in the `./config/nginx` directory. All files must have the `.conf` extension. For example, the configuration below sets up log files, enables ModSecurity, and acts as a reverse proxy for a Docker container named `server2.example.com-web` (which listens on port 8080):
 
 ```txt
-# server1.example.com.conf
+# server2.example.com.conf
 server {
   listen [::]:443 quic;
   listen [::]:443 ssl;
@@ -58,20 +62,20 @@ server {
   server_name seafile.ro14.sh;
 
   include custom/defaults_https.conf;
-  ssl_certificate /etc/nginx/ssl/server1.example.com.pem;
-  ssl_certificate_key /etc/nginx/ssl/server1.example.com.key;
+  ssl_certificate /etc/nginx/ssl/server2.example.com.pem;
+  ssl_certificate_key /etc/nginx/ssl/server2.example.com.key;
 
-  access_log /var/log/nginx/access_server1.example.com_log main;
-  error_log /var/log/nginx/error_server1.example.com_log notice;
+  access_log /var/log/nginx/access_server2.example.com_log main;
+  error_log /var/log/nginx/error_server2.example.com_log notice;
 
   modsecurity_rules '
     SecAuditEngine RelevantOnly
-    SecAuditLog /var/log/nginx/modsecurity_server1.example.com_log
+    SecAuditLog /var/log/nginx/modsecurity_server2.example.com_log
     SecAuditLogParts ABIJDEFHZ
   ';
 
   location / {
-    set $upstream server1.example.com-web:8080;
+    set $upstream server2.example.com-web:8080;
 
     include custom/defaults_proxy.conf;
     include custom/dns_localhost.conf;
