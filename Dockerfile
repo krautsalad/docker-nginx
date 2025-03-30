@@ -17,11 +17,6 @@ ARG ENABLED_MODULES="brotli headers-more"
 
 SHELL ["/bin/ash", "-exo", "pipefail", "-c"]
 
-RUN if [ "$ENABLED_MODULES" = "" ]; then \
-        echo "No additional modules enabled, exiting"; \
-        exit 1; \
-    fi
-
 RUN apk update \
     && apk add --no-cache linux-headers openssl-dev pcre2-dev zlib-dev openssl abuild \
                musl-dev libxslt libxml2-utils make mercurial gcc unzip git \
@@ -74,19 +69,10 @@ RUN apk update \
 FROM owasp/modsecurity-crs:${OWASP_VERSION}
 
 ARG MODSEC3_VERSION
-
 ENV MODSEC3_VERSION=${MODSEC3_VERSION}
-ENV TZ=Europe/Berlin
 
 HEALTHCHECK NONE
 USER root
-
-RUN set -xe && \
-    apk update && \
-    apk add --no-cache --virtual .build-deps tzdata && \
-    cp /usr/share/zoneinfo/${TZ} /etc/localtime && \
-    echo "${TZ}" > /etc/timezone && \
-    apk del .build-deps
 
 RUN --mount=type=bind,target=/tmp/packages/,source=/tmp/packages/,from=builder \
     . /tmp/packages/modules.env && \
@@ -94,10 +80,12 @@ RUN --mount=type=bind,target=/tmp/packages/,source=/tmp/packages/,from=builder \
         apk add --no-cache --allow-untrusted /tmp/packages/nginx-module-${module}-${NGINX_VERSION}*.apk; \
     done
 
-RUN rm -rf /docker-entrypoint.d /etc/nginx/* /root/.cache /tmp/* /var/cache/apk/* /var/tmp/*
-
-RUN sed -i 's/SecDefaultAction "phase:1,log,auditlog,pass"/SecDefaultAction "phase:1,nolog,auditlog,pass"/' /opt/owasp-crs/crs-setup.conf
-RUN sed -i 's/SecDefaultAction "phase:2,log,auditlog,pass"/SecDefaultAction "phase:2,nolog,auditlog,pass"/' /opt/owasp-crs/crs-setup.conf
+RUN apk update && \
+    apk add --no-cache tzdata && \
+    openssl req -x509 -newkey rsa:4096 -nodes -keyout /etc/ssl/private/snakeoil.key -out /etc/ssl/private/snakeoil.crt -days 36500 -subj "/CN=localhost" && \
+    sed -i 's/SecDefaultAction "phase:1,log,auditlog,pass"/SecDefaultAction "phase:1,nolog,auditlog,pass"/' /opt/owasp-crs/crs-setup.conf && \
+    sed -i 's/SecDefaultAction "phase:2,log,auditlog,pass"/SecDefaultAction "phase:2,nolog,auditlog,pass"/' /opt/owasp-crs/crs-setup.conf && \
+    rm -rf /docker-entrypoint.d /etc/nginx/* /root/.cache /tmp/* /var/cache/apk/* /var/tmp/*
 
 COPY docker-entrypoint.sh /usr/local/bin/docker-entrypoint.sh
 COPY nginx /etc/nginx
