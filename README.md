@@ -61,7 +61,7 @@ server {
   listen [::]:443 quic;
   listen [::]:443 ssl;
 
-  server_name seafile.ro14.sh;
+  server_name server2.example.com;
 
   include custom/defaults_https.conf;
   ssl_certificate /etc/nginx/ssl/server2.example.com.pem;
