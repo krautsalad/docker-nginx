@@ -36,11 +36,11 @@ services:
 
 ### Environment Variables
 
-- `DEFAULT_DOMAIN`: Default server certificate name (default: snakeoil).
+- `DEFAULT_DOMAIN`: Default server certificate name (default: empty).
 - `DISABLE_IPV6`: When set to true, IPv6 address binding is disabled and IPv6 addresses are excluded from OCSP stapling. (default: false).
 - `TZ`: Timezone setting (default: UTC).
 
-*Note*: The certificate for `DEFAULT_DOMAIN` will be used for all HTTPS requests that do not match any server names defined in your sites configuration. It is expected that the certificate and key files already exist (e.g., `./data/ssl/server1.example.com.pem` and `./data/ssl/server1.example.com.key`), otherwise Nginx will fail to start.
+*Note*: The certificate for `DEFAULT_DOMAIN` will be used for all HTTPS requests that do not match any server names defined in your sites configuration. It is expected that the certificate and key files already exist (e.g., `./data/ssl/server1.example.com.pem` and `./data/ssl/server1.example.com.key`), otherwise Nginx will fail to start. If DEFAULT_DOMAIN is not set, a self-signed certificate will be used.
 
 ## How it works
 
