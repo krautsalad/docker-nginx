@@ -18,6 +18,8 @@ Optimized Nginx Build with Brotli, Headers-More, and ModSecurity.
 services:
   nginx:
     container_name: nginx
+    dns:
+      - 127.0.0.1
     environment:
       DEFAULT_DOMAIN: server1.example.com
       DISABLE_IPV6: false
@@ -64,6 +66,8 @@ server {
   server_name server2.example.com;
 
   include custom/defaults_https.conf;
+  include custom/dns_localhost.conf;
+
   ssl_certificate /etc/nginx/ssl/server2.example.com.pem;
   ssl_certificate_key /etc/nginx/ssl/server2.example.com.key;
   ssl_stapling_file /etc/nginx/ssl/server2.example.com.ocsp.der;
@@ -81,7 +85,6 @@ server {
     set $upstream server2.example.com-web:8080;
 
     include custom/defaults_proxy.conf;
-    include custom/dns_localhost.conf;
   }
 }
 ```
