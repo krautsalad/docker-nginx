@@ -66,6 +66,7 @@ server {
   include custom/defaults_https.conf;
   ssl_certificate /etc/nginx/ssl/server2.example.com.pem;
   ssl_certificate_key /etc/nginx/ssl/server2.example.com.key;
+  ssl_stapling_file /etc/nginx/ssl/server2.example.com.ocsp.der;
 
   access_log /var/log/nginx/access_server2.example.com_log main;
   error_log /var/log/nginx/error_server2.example.com_log notice;

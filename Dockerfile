@@ -7,9 +7,9 @@
 # It may also be possible to compile ModSecurity from source inside the builder image.
 # see https://github.com/andrewnk/docker-alpine-nginx-modsec/blob/main/Dockerfile
 
-ARG NGINX_VERSION=1.27.3
-ARG MODSEC3_VERSION=3.0.13
-ARG OWASP_VERSION=4-nginx-alpine-202502011102
+ARG NGINX_VERSION=1.26.3
+ARG MODSEC3_VERSION=3.0.14
+ARG OWASP_VERSION=4-nginx-alpine-202503230103
 
 FROM nginx:${NGINX_VERSION}-alpine AS builder
 
