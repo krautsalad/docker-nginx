@@ -82,7 +82,7 @@ RUN --mount=type=bind,target=/tmp/packages/,source=/tmp/packages/,from=builder \
 
 RUN apk update && \
     apk add --no-cache tzdata && \
-    openssl req -x509 -newkey rsa:4096 -nodes -keyout /etc/ssl/private/snakeoil.key -out /etc/ssl/private/snakeoil.crt -days 36500 -subj "/CN=localhost" && \
+    openssl req -x509 -newkey rsa:4096 -nodes -keyout /etc/ssl/private/snakeoil.key -out /etc/ssl/private/snakeoil.pem -days 36500 -subj "/CN=localhost" && \
     sed -i 's/SecDefaultAction "phase:1,log,auditlog,pass"/SecDefaultAction "phase:1,nolog,auditlog,pass"/' /opt/owasp-crs/crs-setup.conf && \
     sed -i 's/SecDefaultAction "phase:2,log,auditlog,pass"/SecDefaultAction "phase:2,nolog,auditlog,pass"/' /opt/owasp-crs/crs-setup.conf && \
     rm -rf /docker-entrypoint.d /etc/nginx/* /root/.cache /tmp/* /var/cache/apk/* /var/tmp/*

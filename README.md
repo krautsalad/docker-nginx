@@ -42,7 +42,7 @@ services:
 - `DISABLE_IPV6`: When set to true, IPv6 address binding is disabled and IPv6 addresses are excluded from OCSP stapling. (default: false).
 - `TZ`: Timezone setting (default: UTC).
 
-*Note*: The certificate for `DEFAULT_DOMAIN` will be used for all HTTPS requests that do not match any server names defined in your sites configuration. It is expected that the certificate and key files already exist (e.g., `./data/ssl/server1.example.com.pem` and `./data/ssl/server1.example.com.key`), otherwise Nginx will fail to start. If DEFAULT_DOMAIN is not set, a self-signed certificate will be used.
+*Note*: The certificate for `DEFAULT_DOMAIN` will be used for all HTTPS requests that do not match any server names defined in your sites configuration. It is expected that the certificate and key files already exist (e.g., `./data/ssl/server1.example.com.key`, `./data/ssl/server1.example.com.pem` and `./data/ssl/server1.example.com.ocsp.der`), otherwise Nginx will fail to start. If DEFAULT_DOMAIN is not set, a self-signed certificate will be used.
 
 ## How it works
 
@@ -57,7 +57,7 @@ For ACME challenges, mount the folder `./data/acme-challenge` to `/etc/nginx/acm
 
 Place your individual site configuration files in the `./config/nginx` directory. All files must have the `.conf` extension. For example, the configuration below sets up log files, enables ModSecurity, and acts as a reverse proxy for a Docker container named `server2.example.com-web` (which listens on port 8080):
 
-```txt
+```nginx
 # server2.example.com.conf
 server {
   listen [::]:443 quic;
