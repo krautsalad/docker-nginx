@@ -39,10 +39,10 @@ services:
 ### Environment Variables
 
 - `DEFAULT_DOMAIN`: Default server certificate name (default: empty).
-- `DISABLE_IPV6`: When set to true, IPv6 address binding is disabled and IPv6 addresses are excluded from OCSP stapling. (default: false).
+- `DISABLE_IPV6`: When set to true, IPv6 address binding is disabled. (default: false).
 - `TZ`: Timezone setting (default: UTC).
 
-*Note*: The certificate for `DEFAULT_DOMAIN` will be used for all HTTPS requests that do not match any server names defined in your sites configuration. It is expected that the certificate and key files already exist (e.g., `./data/ssl/server1.example.com.key`, `./data/ssl/server1.example.com.pem` and `./data/ssl/server1.example.com.ocsp.der`), otherwise Nginx will fail to start. If DEFAULT_DOMAIN is not set, a self-signed certificate will be used.
+*Note*: The certificate for `DEFAULT_DOMAIN` will be used for all HTTPS requests that do not match any server names defined in your sites configuration. It is expected that the certificate and key files already exist (e.g., `./data/ssl/server1.example.com.key` and `./data/ssl/server1.example.com.pem`), otherwise Nginx will fail to start. If DEFAULT_DOMAIN is not set, a self-signed certificate will be used.
 
 ## How it works
 
@@ -70,7 +70,6 @@ server {
 
   ssl_certificate /etc/nginx/ssl/server2.example.com.pem;
   ssl_certificate_key /etc/nginx/ssl/server2.example.com.key;
-  ssl_stapling_file /etc/nginx/ssl/server2.example.com.ocsp.der;
 
   access_log /var/log/nginx/access_server2.example.com_log main;
   error_log /var/log/nginx/error_server2.example.com_log notice;
