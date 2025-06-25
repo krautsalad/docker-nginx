@@ -4,21 +4,21 @@
 # see https://github.com/nginxinc/docker-nginx/tree/master/modules
 # see https://github.com/coreruleset/modsecurity-crs-docker
 
-ARG NGINX_VERSION
-ARG MODSEC3_VERSION
 ARG OWASP_VERSION
 
-FROM krautsalad/nginx-builder AS builder
+FROM krautsalad/nginx-build AS build
 
 FROM owasp/modsecurity-crs:${OWASP_VERSION:-latest}
 
 ARG MODSEC3_VERSION
+ARG NGINX_VERSION
+
 ENV MODSEC3_VERSION=${MODSEC3_VERSION}
 
 HEALTHCHECK NONE
 USER root
 
-RUN --mount=type=bind,target=/tmp/packages/,source=/tmp/packages/,from=builder . /tmp/packages/modules.env && \
+RUN --mount=type=bind,target=/tmp/packages/,source=/tmp/packages/,from=build . /tmp/packages/modules.env && \
     for module in $BUILT_MODULES; do \
         apk add --no-cache --allow-untrusted /tmp/packages/nginx-module-${module}-${NGINX_VERSION}*.apk; \
     done

@@ -9,7 +9,7 @@ OWASP_VERSION=4-nginx-alpine-202506050606
 docker build \
     --build-arg ENABLED_MODULES="${ENABLED_MODULES}" \
     --build-arg NGINX_FROM_IMAGE=nginx:${NGINX_VERSION}-alpine \
-    --no-cache --progress=plain --target builder -t krautsalad/nginx-builder \
+    --no-cache --progress=plain --target builder -t krautsalad/nginx-build \
     https://raw.githubusercontent.com/nginx/docker-nginx/refs/tags/${NGINX_VERSION}/modules/Dockerfile.alpine
 docker build \
     --build-arg MODSEC3_VERSION=${MODSEC3_VERSION} \
