@@ -1,3 +1,7 @@
+# 1.28.2-1
+
+- nginx update
+
 # 1.28.0-4
 
 - Revert dns caching time to 300s

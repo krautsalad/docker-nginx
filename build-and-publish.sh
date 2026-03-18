@@ -2,9 +2,9 @@
 set -ex
 
 ENABLED_MODULES="brotli headers-more"
-NGINX_VERSION=1.28.0
+NGINX_VERSION=1.28.2
 MODSEC3_VERSION=3.0.14
-OWASP_VERSION=4-nginx-alpine-202506050606
+OWASP_VERSION=4-nginx-alpine-202603150103
 
 docker build \
     --build-arg ENABLED_MODULES="${ENABLED_MODULES}" \
