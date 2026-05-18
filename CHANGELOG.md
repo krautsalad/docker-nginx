@@ -1,3 +1,8 @@
+# 1.28.2-2
+
+- Updated OWASP CRS
+- Added authelia configuration files
+
 # 1.28.2-1
 
 - nginx update
