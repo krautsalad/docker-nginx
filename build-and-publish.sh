@@ -2,9 +2,9 @@
 set -ex
 
 ENABLED_MODULES="brotli headers-more"
-NGINX_VERSION=1.30.4
+NGINX_VERSION=1.30.3
 MODSEC3_VERSION=3.0.16
-OWASP_VERSION=4-nginx-alpine-202608131208
+OWASP_VERSION=4-nginx-alpine-202607100407
 
 SCRIPT_DIR=$(cd "$(dirname "$0")" && pwd)
 VERSION=$(git describe --tags "$(git rev-list --tags --max-count=1)")

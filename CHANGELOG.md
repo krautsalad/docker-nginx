@@ -1,4 +1,4 @@
-# 1.30.4-1
+# 1.30.3-1
 
 - Updated nginx
 - Updated modsecurity
