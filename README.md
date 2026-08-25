@@ -88,7 +88,7 @@ server {
 }
 ```
 
-*Note*: For proper name resolution of Docker containers, ensure you have a DNS server running. See [krautsalad/dnsmasq](https://hub.docker.com/r/krautsalad/dnsmasq) for more details on setting up a DNS service.
+*Note*: For proper name resolution of Docker containers, ensure you have a DNS server running. See [krautsalad/dnsmasq](https://hub.docker.com/r/krautsalad/dnsmasq) for more details on setting up a DNS service. Alternatively, you can use [Traefik](https://hub.docker.com/_/traefik) as a reverse proxy, which discovers Docker containers automatically and does not require a separate DNS server like dnsmasq.
 
 ## Source Code
 

@@ -1,3 +1,9 @@
+# 1.30.4-1
+
+- Updated nginx
+- Updated modsecurity
+- Disable body checks in OWASP CRS
+
 # 1.28.2-2
 
 - Updated OWASP CRS
@@ -5,7 +11,7 @@
 
 # 1.28.2-1
 
-- nginx update
+- Updated nginx
 
 # 1.28.0-4
 
